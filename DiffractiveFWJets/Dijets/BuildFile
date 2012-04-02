@@ -1,0 +1,38 @@
+<use name=FWCore/Framework>
+<use name=FWCore/PluginManager>
+<use name=FWCore/ParameterSet>
+<use name=FWCore/ServiceRegistry>
+
+<use name=PhysicsTools/UtilAlgos>
+<use name=PhysicsTools/SelectorUtils>
+<use name=CommonTools/UtilAlgos>
+<use name=CommonTools/Utils>
+<use name=RecoJets/JetProducers>
+<use name=DataFormats/TrackReco>
+<use name=DataFormats/JetReco>
+<use name=DataFormats/METReco>
+<use name=DataFormats/HepMCCandidate>
+<use name=DataFormats/Common>
+
+<flags EDM_PLUGIN=1>
+<export>
+   <lib name=DiffractiveFWJetsDijets>
+  
+   <use name=FWCore/Framework>
+   <use name=FWCore/PluginManager>
+   <use name=FWCore/ParameterSet>
+   <use name=FWCore/ServiceRegistry> 
+
+<use name=PhysicsTools/UtilAlgos>
+<use name=PhysicsTools/SelectorUtils>
+<use name=CommonTools/UtilAlgos>
+<use name=CommonTools/Utils>
+<use name=RecoJets/JetProducers>
+<use name=DataFormats/TrackReco>
+<use name=DataFormats/JetReco>
+<use name=DataFormats/METReco>
+<use name=DataFormats/HepMCCandidate>
+<use name=DataFormats/Common>
+
+</export>
+
