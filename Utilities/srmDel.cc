@@ -36,6 +36,8 @@ std::vector<std::string> list;
 
 srmlscommand = "srmls -count=999 srm://se-dcache.hepgrid.uerj.br:8443/srm/managerv2?SFN=" + pathin_+ "> tempfile_Listdel.txt";
 srmlscommand2 = "srmls -count=999 -offset=999 srm://se-dcache.hepgrid.uerj.br:8443/srm/managerv2?SFN=" + pathin_ + " >> tempfile_Listdel.txt";
+finalcommand = "srmrmdir -recursive=true srm://se-dcache.hepgrid.uerj.br:8443/srm/managerv2?SFN="+ pathin_;
+
 
 system (srmlscommand.c_str());
 system (srmlscommand2.c_str());
@@ -53,27 +55,29 @@ std::string word;
     }
 
     
-    for (unsigned n=1; n <= list.size(); ++n) {
+    for (unsigned n=1; n < list.size(); ++n) {
         
       double progress = 10.0*n/(1.0*list.size());
    
         if ( !list.at(n).find(pathin_) && (list.at(n).size() > pathin_.size() + 5) && !list.at(n).empty() )  {
 
-          srmdelcommand = "srmrm srm://se-dcache.hepgrid.uerj.br:8443/srm/managerv2?SFN=" + list.at(n);
-          system(srmdelcommand.c_str());
-          std::cout << "File "<< list.at(n) << " was erased." << std::endl;
-         
+          
+           srmdelcommand = "srmrm srm://se-dcache.hepgrid.uerj.br:8443/srm/managerv2?SFN=" + list.at(n);
+           std::cout<< srmdelcommand << std::endl;
+           system(srmdelcommand.c_str());
+           std::cout << "File "<< list.at(n) << " was erased." << std::endl;
+   
         struct stat buffer;
-           
+                           
       }
 
     }
 
-   std::cout << "\nTotal of files Listed from SRM SE: " << list.size() << "\n" << std::endl;
+    std::cout << "\nMain Folder will be removed.\n" << std::endl;
+    system(finalcommand.c_str());
+    std::cout << finalcommand << std::endl;
+    std::cout << "\nTotal of files Listed from SRM SE: " << list.size() << "\n" << std::endl;
    infile.close();
-
-   finalcommand = "srmrmdir -recursive=true srm://se-dcache.hepgrid.uerj.br:8443/srm/managerv2?SFN="+ pathin_;
-   system(finalcommand.c_str());
 
   }
 
