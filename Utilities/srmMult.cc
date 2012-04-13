@@ -2,6 +2,8 @@
 // SRM Multiple Command
 //
 
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <vector>
@@ -38,8 +40,10 @@ std::string checkcom;
 std::string outcommand;
 std::string filename;
 std::string pathoutcomplete;
+std::string numberoffiles;
 std::vector<std::string> list;
 
+numberoffiles = "ls " + pathout_ + " | wc -l ";
 srmlscommand = "srmls -count=999 srm://se-dcache.hepgrid.uerj.br:8443/srm/managerv2?SFN=" + pathin_+ "> tempfile_List.txt";
 srmlscommand2 = "srmls -count=999 -offset=999 srm://se-dcache.hepgrid.uerj.br:8443/srm/managerv2?SFN=" + pathin_ + " >> tempfile_List.txt";
 
@@ -59,7 +63,7 @@ std::string word;
     }
 
     
-    for (unsigned n=1; n <= list.size(); ++n) {
+    for (unsigned n=1; n < list.size(); ++n) {
         
       double progress = 10.0*n/(1.0*list.size());
    
@@ -70,28 +74,24 @@ std::string word;
           checkcom = "ls " + pathout_+list.at(n).erase(0,pathin_.length()+1);
           filename = pathout_ + list.at(n);
   
-          system(srmcpcommand.c_str());
-
-         
-        struct stat buffer;
-           
-        if (stat(filename.c_str(), &buffer) == 0) {
-          std::cout <<"\n<>o<>o<>o<>o<>o<> STATUS <>o<>o<>o<>o<>o<>\n" << std::endl;
-          std::cout << std::setprecision (4) << 10*progress<<" % completed." << std::endl;
-          std::cout << "\n<  OK  >        " << filename.c_str() << ".\n" << std::endl; 
-        }
+          struct stat buffer;
+          
+            while(stat(filename.c_str(), &buffer) != 0){
+              system(srmcpcommand.c_str());
+              std::cout <<"\n<<------------------------------------------------------------------------>>" << std::endl;
+              std::cout << "\n < OK > " << filename.c_str() << ".\n" << std::endl;
+              std::cout <<  "<<------------------------------------------------------------------------>>\n" << std::endl;
+            }
             
-        else  {
-          std::cout <<"\n<<------------------------------------ REPEAT OPERATION ------------------------------------>>" << std::endl;
-          std::cout << " Copying File: " << filename << std::endl;
-          std::cout <<  "<<-------------------------------------------------------------------------------------------->>\n" << std::endl;
-        }  
-
-      }
+        }
 
     }
 
-   std::cout << "\nTotal of files Listed from SRM SE: " << list.size() << "\n" << std::endl;
+
+
+   std::cout << "Total of files copied: " << std::endl;
+   system(numberoffiles.c_str());
+   std::cout << "\n" << std::endl;
    infile.close();
 
   }
